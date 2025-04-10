@@ -35,22 +35,14 @@ int media_movel(int *buffer){
 void process_task(void *p) {
     int buffer[5] = {0}; // Últimos 5 valores
     int index = 0;
-    int count = 0; //
 
     while (true) {
         int data;
         if (xQueueReceive(xQueueData, &data, 100)) {
             buffer[index] = data;
             index = (index + 1) % 5;
-
-            if (count < 5) {
-                count++;
-            }
-
-            if (count == 5) {
-                int media = media_movel(buffer);
-                printf("%d\n", media);
-            }
+            int media = media_movel(buffer);
+            printf("%d\n", media);
 
             vTaskDelay(pdMS_TO_TICKS(50));
         }
