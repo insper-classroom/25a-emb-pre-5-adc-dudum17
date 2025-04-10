@@ -49,6 +49,7 @@ void process_task(void *p) {
 
             if (count == 5) {
                 int media = media_movel(buffer);
+                printf("%d\n", media);
             }
 
             vTaskDelay(pdMS_TO_TICKS(50));
