@@ -23,17 +23,34 @@ void data_task(void *p) {
     }
 }
 
+int media_movel(int *buffer){
+    int soma = 0;
+    for (int i = 0; i < 5; i++) {
+        soma += buffer[i];
+    }
+    return soma / 5;
+
+}
+
 void process_task(void *p) {
-    int data = 0;
+    int buffer[5] = {0}; // Últimos 5 valores
+    int index = 0;
+    int count = 0; //
 
     while (true) {
+        int data;
         if (xQueueReceive(xQueueData, &data, 100)) {
-            // implementar filtro aqui!
+            buffer[index] = data;
+            index = (index + 1) % 5;
 
+            if (count < 5) {
+                count++;
+            }
 
+            if (count == 5) {
+                int media = media_movel(buffer);
+            }
 
-
-            // deixar esse delay!
             vTaskDelay(pdMS_TO_TICKS(50));
         }
     }
